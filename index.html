@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orbital Portfolio — Showcase Only</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="ui">
+    <div class="filters" role="toolbar" aria-label="Filters">
+      <button class="filter active" data-tag="all">All</button>
+      <button class="filter" data-tag="unreal">Unreal</button>
+      <button class="filter" data-tag="unity">Unity</button>
+    </div>
+  </div>
+
+  <main class="stage" id="stage" tabindex="0">
+    <div class="orb">SHOWCASE</div>
+
+    <div class="orbit" id="orbit" data-rotation="0">
+      <!-- Cards will be injected here via app.js -->
+    </div>
+  </main>
+
+  <aside id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button id="modalClose" class="close" aria-label="Close">✕</button>
+      
+      <div id="mImgContainer" style="position:relative; width:100%; margin-bottom:15px; display:none; background:rgba(0,0,0,0.5); border-radius:8px; border:1px solid rgba(255,255,255,0.1); overflow:hidden;">
+        <button id="imgPrev" style="position:absolute; left:0; top:0; bottom:0; width:40px; background:linear-gradient(90deg, rgba(0,0,0,0.6) 0%, transparent 100%); color:white; border:none; cursor:pointer; font-size:18px; z-index:2;">❮</button>
+        <img id="mImg" src="" alt="Project Image" style="width:100%; height:auto; max-height:45vh; object-fit:contain; display:block; margin:0 auto;" />
+        <button id="imgNext" style="position:absolute; right:0; top:0; bottom:0; width:40px; background:linear-gradient(270deg, rgba(0,0,0,0.6) 0%, transparent 100%); color:white; border:none; cursor:pointer; font-size:18px; z-index:2;">❯</button>
+      </div>
+
+      <h2 id="mTitle" style="margin-top:0;"></h2>
+      <div id="mTech" style="font-size:13px; color:var(--accent); margin-bottom:12px; font-weight:600;"></div>
+      <p id="mDesc" style="line-height:1.5;"></p>
+      
+      <div id="mLinks" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+        <!-- Dynamic links will be injected here -->
+      </div>
+      
+      <div class="modal-controls">
+        <button id="prev">←</button>
+        <button id="next">→</button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

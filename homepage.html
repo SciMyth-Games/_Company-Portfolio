@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orbital Portfolio — Showcase Only</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="ui">
+    <button id="themeToggle" aria-label="Toggle theme">🌓</button>
+    <div class="filters" role="toolbar" aria-label="Filters">
+      <button class="filter active" data-tag="all">All</button>
+      <button class="filter" data-tag="web">Web</button>
+      <button class="filter" data-tag="mobile">Mobile</button>
+      <button class="filter" data-tag="game">Game</button>
+    </div>
+  </div>
+
+  <main class="stage" id="stage" tabindex="0">
+    <div class="orb">SHOWCASE</div>
+
+    <div class="orbit" id="orbit" data-rotation="0">
+      <article class="card" data-tags="web" tabindex="0" data-title="Glide UI" data-desc="A micro-interaction library with fluid physics.">
+        <h3>Glide UI</h3><p>Web</p>
+      </article>
+
+      <article class="card" data-tags="mobile" tabindex="0" data-title="Pocket Weather" data-desc="Offline-first weather app demo.">
+        <h3>Pocket Weather</h3><p>Mobile</p>
+      </article>
+
+      <article class="card" data-tags="game" tabindex="0" data-title="Astro Hop" data-desc="Mini platformer demo with procedural levels.">
+        <h3>Astro Hop</h3><p>Game</p>
+      </article>
+
+      <article class="card" data-tags="web game" tabindex="0" data-title="Canvas Lab" data-desc="Interactive canvas experiments.">
+        <h3>Canvas Lab</h3><p>Web • Game</p>
+      </article>
+
+      <article class="card" data-tags="web" tabindex="0" data-title="Portfolio Anim" data-desc="Unique entrance animations and transitions.">
+        <h3>Portfolio Anim</h3><p>Web</p>
+      </article>
+    </div>
+  </main>
+
+  <aside id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button id="modalClose" class="close" aria-label="Close">✕</button>
+      <h2 id="mTitle"></h2>
+      <p id="mDesc"></p>
+      <div class="modal-controls">
+        <button id="prev">←</button>
+        <button id="next">→</button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
