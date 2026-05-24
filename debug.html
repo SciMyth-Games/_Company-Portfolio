@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug - Portfolio Load Test</title>
+  <style>
+    body {
+      background: #0f1724;
+      color: #e6eef8;
+      font-family: monospace;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(11, 18, 32, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    h1 {
+      color: #6ee7b7;
+      margin-top: 0;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      background: rgba(110, 231, 183, 0.1);
+      border-left: 3px solid #6ee7b7;
+    }
+    .error {
+      background: rgba(255, 107, 107, 0.1);
+      border-left-color: #ff6b6b;
+      color: #ff9999;
+    }
+    .success {
+      background: rgba(110, 231, 183, 0.1);
+      border-left-color: #6ee7b7;
+      color: #6ee7b7;
+    }
+    pre {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(110, 231, 183, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Portfolio Load Test</h1>
+    
+    <div id="status"></div>
+    
+    <h2>Fetching Projects...</h2>
+    <div id="results"></div>
+    
+    <h2>Projects Loaded</h2>
+    <div id="projectList" class="project-list"></div>
+  </div>
+
+  <script>
+    const statusDiv = document.getElementById('status');
+    const resultsDiv = document.getElementById('results');
+    const projectListDiv = document.getElementById('projectList');
+
+    function addStatus(message, isError = false) {
+      const div = document.createElement('div');
+      div.className = `status ${isError ? 'error' : 'success'}`;
+      div.textContent = message;
+      statusDiv.appendChild(div);
+    }
+
+    async function test() {
+      try {
+        addStatus('📍 Testing at: ' + window.location.origin);
+        
+        // Test 1: Fetch projects.json
+        addStatus('🔄 Fetching data/projects.json...');
+        const projectsRes = await fetch('data/projects.json');
+        if (!projectsRes.ok) {
+          throw new Error(`HTTP ${projectsRes.status}: ${projectsRes.statusText}`);
+        }
+        const projectsData = await projectsRes.json();
+        const projectCount = projectsData.projects ? projectsData.projects.length : 0;
+        addStatus(`✅ Loaded ${projectCount} projects from data/projects.json`);
+
+        // Test 2: Fetch project-details.json
+        addStatus('🔄 Fetching data/project-details.json...');
+        try {
+          const detailsRes = await fetch('data/project-details.json');
+          if (detailsRes.ok) {
+            const detailsData = await detailsRes.json();
+            const detailCount = Object.keys(detailsData.projectDetails || {}).length;
+            addStatus(`✅ Loaded ${detailCount} project details from data/project-details.json`);
+          }
+        } catch (e) {
+          addStatus('⚠️ Could not load project-details.json (optional)', false);
+        }
+
+        // Display projects
+        if (projectsData.projects && projectsData.projects.length > 0) {
+          addStatus(`✅ SUCCESS: ${projectCount} projects ready to display!`);
+          
+          projectsData.projects.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+              <strong>${p.title}</strong><br>
+              <small>${p.engine}</small><br>
+              <small style="color: #98a8bf;">ID: ${p.id}</small>
+            `;
+            projectListDiv.appendChild(card);
+          });
+        } else {
+          addStatus('❌ ERROR: No projects found in data/projects.json', true);
+        }
+
+      } catch (err) {
+        addStatus(`❌ ERROR: ${err.message}`, true);
+        const pre = document.createElement('pre');
+        pre.textContent = err.stack;
+        resultsDiv.appendChild(pre);
+      }
+    }
+
+    // Run test when page loads
+    test();
+  </script>
+</body>
+</html>
+

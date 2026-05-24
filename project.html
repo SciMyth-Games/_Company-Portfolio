@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Details</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body { padding: 20px; overflow-y: auto; text-align: center; }
+    .project-container { max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+    h1 { color: #e9fbf4; margin-top: 0; }
+    .tech { color: var(--accent); font-weight: bold; margin-bottom: 20px; }
+    .desc { color: var(--muted); line-height: 1.6; margin-bottom: 30px; text-align: left; }
+    .main-img { width: 100%; border-radius: 8px; margin-bottom: 20px; display: none; }
+    .gallery { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
+    .gallery img { height: 100px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; opacity: 0.7; transition: all 0.2s; }
+    .gallery img:hover, .gallery img.active { opacity: 1; border-color: var(--accent); }
+    .links a { display: inline-block; margin: 5px; padding: 10px 15px; background: var(--glass); border-radius: 6px; color: var(--accent); text-decoration: none; border: 1px solid rgba(255,255,255,0.1); }
+    .links a:hover { background: rgba(255,255,255,0.1); }
+    .back-btn { margin-bottom: 20px; display: inline-block; color: white; text-decoration: none; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+    <a href="index.html" class="back-btn">← Back</a>
+  </div>
+  
+  <div class="project-container" id="content">
+    <p>Loading project details...</p>
+  </div>
+
+  <script>
+    let currentImageIndex = 0;
+    
+    function getYouTubeEmbedUrl(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+    }
+
+    async function loadProject() {
+      const params = new URLSearchParams(window.location.search);
+      const title = params.get('title');
+      if (!title) {
+        document.getElementById('content').innerHTML = '<p>Project not found.</p>';
+        return;
+      }
+      
+      try {
+        const res = await fetch('data/cv.json');
+        const data = await res.json();
+        const project = data.projects.find(p => p.title === title);
+        
+        if (!project) {
+          document.getElementById('content').innerHTML = '<p>Project not found.</p>';
+          return;
+        }
+
+        const imagesList = project.images || project.screenshots || [project.image].filter(Boolean);
+        window.mappedImages = imagesList;
+        const mappedImages = window.mappedImages;
+        
+        let html = `
+          <h1>${project.title}</h1>
+          <div class="tech">${project.engine || ''} ${project.tech ? '• ' + project.tech : ''}</div>
+          <div class="desc">${project.description || ''}</div>
+        `;
+        
+        if (mappedImages.length > 0) {
+          html += `
+            <div style="position:relative; margin-bottom: 20px; display:inline-block; width:100%;">
+              ${mappedImages.length > 1 ? '<button style="position:absolute; left:10px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:40px; height:40px; font-size:20px; cursor:pointer; z-index:10;" onclick="prevImage()">❮</button>' : ''}
+              <img id="mainImg" class="main-img" src="${mappedImages[0]}" style="display:block; margin:0 auto; margin-bottom:0;">
+              ${mappedImages.length > 1 ? '<button style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:40px; height:40px; font-size:20px; cursor:pointer; z-index:10;" onclick="nextImage()">❯</button>' : ''}
+            </div>
+          `;
+          if (mappedImages.length > 1) {
+            html += `<div class="gallery">`;
+            mappedImages.forEach((img, idx) => {
+              html += `<img src="${img}" class="${idx === 0 ? 'active' : ''}" onclick="setMainImage(${idx})">`;
+            });
+            html += `</div>`;
+          }
+        }
+
+        // Add Video Section
+        if (project.video) {
+          const embedUrl = getYouTubeEmbedUrl(project.video);
+          if (embedUrl) {
+            html += `
+              <h2 style="text-align: left; color: #e9fbf4; margin-top: 30px;">Video Preview</h2>
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+              </div>
+            `;
+          }
+        }
+        
+        html += `<div class="links">`;
+        if (project.download) html += `<a href="${project.download}" target="_blank">Download ↗</a>`;
+        if (project.source || project.github) html += `<a href="${project.source || project.github}" target="_blank">Source Code ↗</a>`;
+        
+        // Add any additional dynamic links avoiding demo
+        const linksObj = project.links || {};
+        Object.keys(linksObj).forEach(key => {
+          if (typeof linksObj[key] === 'string' && key.toLowerCase() !== 'demo') {
+            html += `<a href="${linksObj[key]}" target="_blank">${key.charAt(0).toUpperCase() + key.slice(1)} ↗</a>`;
+          }
+        });
+
+        html += `</div>`;
+        
+        document.getElementById('content').innerHTML = html;
+        document.title = project.title + " - Orbital Portfolio";
+        
+      } catch (err) {
+        document.getElementById('content').innerHTML = '<p>Error loading project.</p>';
+      }
+    }
+    
+    function setMainImage(index) {
+      if (!window.mappedImages || window.mappedImages.length === 0) return;
+      currentImageIndex = index;
+      document.getElementById('mainImg').src = window.mappedImages[currentImageIndex];
+      const thumbs = document.querySelectorAll('.gallery img');
+      thumbs.forEach((img, idx) => {
+        if (idx === currentImageIndex) {
+          img.classList.add('active');
+        } else {
+          img.classList.remove('active');
+        }
+      });
+    }
+
+    function prevImage() {
+      if (!window.mappedImages || window.mappedImages.length === 0) return;
+      currentImageIndex = (currentImageIndex - 1 + window.mappedImages.length) % window.mappedImages.length;
+      setMainImage(currentImageIndex);
+    }
+
+    function nextImage() {
+      if (!window.mappedImages || window.mappedImages.length === 0) return;
+      currentImageIndex = (currentImageIndex + 1) % window.mappedImages.length;
+      setMainImage(currentImageIndex);
+    }
+    
+    loadProject();
+  </script>
+</body>
+</html>

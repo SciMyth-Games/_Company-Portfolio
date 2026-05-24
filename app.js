@@ -1,60 +1,67 @@
 ﻿const orbit = document.getElementById('orbit');
 let cards = [];
-const modal = document.getElementById('modal');
-const mTitle = document.getElementById('mTitle');
-const mDesc = document.getElementById('mDesc');
-const mTech = document.getElementById('mTech');
-const mImgContainer = document.getElementById('mImgContainer');
-const mImg = document.getElementById('mImg');
-const mLinks = document.getElementById('mLinks');
-const modalClose = document.getElementById('modalClose');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const imgPrev = document.getElementById('imgPrev');
-const imgNext = document.getElementById('imgNext');
+let allProjects = [];
 const filters = document.querySelectorAll('.filter');
 
 let rotation = 0;
 let tilt = 0;
 let activeIndex = 0;
-let activeImages = [];
-let activeImageIndex = 0;
 
 // Fetch projects and generate cards
 async function initPortfolio() {
   try {
-    const res = await fetch('https://rez26.github.io/_Portfolio/data/cv.json');
-    const data = await res.json();
+    // Fetch projects.json
+    const projectsRes = await fetch('data/projects.json');
+    if (!projectsRes.ok) {
+      throw new Error(`Failed to load projects.json: ${projectsRes.status}`);
+    }
+    const projectsData = await projectsRes.json();
     
-    // Filter projects to only include games (you can modify the condition based on the JSON structure)
-    const gamesOnly = data.projects.filter(p => {
-      const e = (p.engine || '').toLowerCase();
-      const t = (p.type || '').toLowerCase();
-      // Assume it's a game if engine is Unreal/Unity or type includes 'game'
-      return e.includes('unreal') || e.includes('unity') || t.includes('game');
+    allProjects = projectsData.projects;
+    let projectDetailsMap = {};
+    
+    // Try to fetch project-details.json (optional)
+    try {
+      const detailsRes = await fetch('data/project-details.json');
+      if (detailsRes.ok) {
+        const detailsData = await detailsRes.json();
+        projectDetailsMap = detailsData.projectDetails || {};
+      }
+    } catch (e) {
+      console.warn('Could not load project-details.json:', e);
+    }
+    
+    // Merge project details into projects
+    allProjects = allProjects.map(p => {
+      const details = projectDetailsMap[p.id] || {};
+      return {
+        ...p,
+        ...details
+      };
     });
 
     // Create card DOM elements
-    gamesOnly.forEach(p => {
+    allProjects.forEach(p => {
       const isUnreal = (p.engine || '').toLowerCase().includes('unreal');
       const isUnity = (p.engine || '').toLowerCase().includes('unity');
-      const tags = isUnreal ? 'unreal' : (isUnity ? 'unity' : 'game');
-      const shortEngine = isUnreal ? 'Unreal' : (isUnity ? 'Unity' : 'Custom');
+      const tags = p.tags ? p.tags.join(' ') : (isUnreal ? 'unreal' : (isUnity ? 'unity' : 'other'));
+      const shortEngine = isUnreal ? 'Unreal' : (isUnity ? 'Unity' : (p.type || 'Custom'));
       
       const card = document.createElement('article');
       card.className = 'card';
       card.tabIndex = 0;
       card.dataset.tags = tags;
       card.dataset.title = p.title || '';
+      card.dataset.id = p.id || '';
       card.dataset.desc = p.description || '';
-      card.dataset.tech = p.tech || '';
+      card.dataset.tech = (p.techStack || []).join(', ');
       
       // Store array of images for navigation
-      const imagesList = p.images || p.screenshots || [p.image].filter(Boolean);
-      card.dataset.images = JSON.stringify(imagesList.map(img => img.startsWith('http') ? img : `https://rez26.github.io/_Portfolio/${img}`));
+      const imagesList = p.images || [];
+      card.dataset.images = JSON.stringify(imagesList);
       
-      card.dataset.demo = p.demo ? `https://rez26.github.io/_Portfolio/${p.demo}` : '';
-      card.dataset.source = p.source || p.github || '';
+      card.dataset.demo = (p.links && p.links.demo) ? p.links.demo : '';
+      card.dataset.source = (p.links && p.links.source) ? p.links.source : '';
       card.dataset.video = p.video || '';
       card.dataset.download = p.download || '';
       card.dataset.linksObj = JSON.stringify(p.links || {});
@@ -73,19 +80,24 @@ async function initPortfolio() {
     });
     
     placeCards(cards);
+    console.log(`✓ Portfolio loaded with ${cards.length} projects`);
   } catch (err) {
-    console.error('Failed to load portfolio data:', err);
+    console.error('❌ Failed to load portfolio data:', err);
+    // Show error message on page
+    const orbit = document.getElementById('orbit');
+    if (orbit) {
+      orbit.innerHTML = `<div style="color: #ff6b6b; text-align: center; padding: 20px;">Error loading projects: ${err.message}</div>`;
+    }
   }
 }
 
 function placeCards(targetCards){
   const n = targetCards.length;
-  // Overlap and spread out the elements in a thicker ring
+  // Spread out the elements in a perfect ring
   targetCards.forEach((c,i)=>{
     const angle = (i / n) * 360;
     c.dataset.index = i;
-    const stagger = (Math.sin(i * 8765.43) * 180); // Increased factor to spread/overlap items
-    c.style.transform = `rotate(${angle}deg) translateY(calc(var(--orbit-size) / -2.2 + ${stagger}px)) rotate(-${angle}deg)`;
+    c.style.transform = `rotate(${angle}deg) translateY(calc(var(--orbit-size) / -2.2)) rotate(-${angle}deg)`;
   });
 }
 
@@ -93,31 +105,12 @@ function updateOrbit(){
   orbit.style.transform = `rotateX(${tilt}deg) rotateZ(${rotation}deg)`;
 }
 
-// mouse / touch to rotate
-let dragging=false, startX=0, startY=0, startRot=0, startTilt=0;
-document.getElementById('stage').addEventListener('pointerdown', e=>{
-  dragging=true; startX=e.clientX; startY=e.clientY; startRot=rotation; startTilt=tilt;
-});
-window.addEventListener('pointermove', e=>{
-  if(!dragging) return;
-  const dx = e.clientX - startX;
-  const dy = e.clientY - startY;
-  rotation = startRot + dx * 0.12;
-  tilt = Math.max(-40, Math.min(40, startTilt - dy * 0.08));
-  updateOrbit();
-});
-window.addEventListener('pointerup', ()=> dragging=false);
+// mouse / touch rotation removed to prevent spinning on click/drag
 
 // keyboard navigation
 document.addEventListener('keydown', e=>{
-  if(modal.getAttribute('aria-hidden') === 'false'){
-    if(e.key === 'ArrowLeft') nav(-1);
-    if(e.key === 'ArrowRight') nav(1);
-    if(e.key === 'Escape') closeModal();
-    return;
-  }
-  if(e.key === 'ArrowLeft') rotateBy(-20);
-  if(e.key === 'ArrowRight') rotateBy(20);
+  if(e.key === 'ArrowLeft') { rotateBy(-20); nav(-1); }
+  if(e.key === 'ArrowRight') { rotateBy(20); nav(1); }
   if(e.key === 'Enter' && document.activeElement.classList.contains('card')) {
     openCard(document.activeElement);
   }
@@ -126,97 +119,23 @@ document.addEventListener('keydown', e=>{
 function rotateBy(delta){ rotation += delta; updateOrbit(); }
 
 function updateModalImage() {
-  if (activeImages.length > 0) {
-    mImg.src = activeImages[activeImageIndex];
-    mImgContainer.style.display = 'block';
-    
-    // Toggle image navigation buttons
-    const showImgNav = activeImages.length > 1 ? 'block' : 'none';
-    imgPrev.style.display = showImgNav;
-    imgNext.style.display = showImgNav;
-  } else {
-    mImgContainer.style.display = 'none';
-  }
+  // Deprecated, using project page now
 }
 
 function openCard(card){
-  activeIndex = Number(card.dataset.index);
-  mTitle.textContent = card.dataset.title;
-  mDesc.textContent = card.dataset.desc;
-  
-  if (card.dataset.tech) {
-    mTech.textContent = card.dataset.tech;
-    mTech.style.display = 'block';
-  } else {
-    mTech.style.display = 'none';
+  // Open individual project page using project ID
+  const id = card.dataset.id;
+  if (id) {
+    window.location.href = `projects/${id}/index.html`;
   }
-  
-  // Handle images
-  activeImages = JSON.parse(card.dataset.images || '[]');
-  activeImageIndex = 0;
-  updateModalImage();
-  
-  mLinks.innerHTML = '';
-  
-  const addLink = (url, text) => {
-    if (!url) return;
-    const a = document.createElement('a');
-    a.href = url.startsWith('http') ? url : `https://rez26.github.io/_Portfolio/${url}`;
-    a.target = '_blank';
-    a.textContent = text + ' ↗';
-    a.style.cssText = 'padding:6px 12px; background:var(--glass); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:var(--accent); text-decoration:none; font-size:13px; font-weight:500; transition:0.2s;';
-    
-    // Simple hover effect using JS
-    a.addEventListener('mouseenter', () => a.style.background = 'rgba(255,255,255,0.1)');
-    a.addEventListener('mouseleave', () => a.style.background = 'var(--glass)');
-    
-    mLinks.appendChild(a);
-  };
-
-  addLink(card.dataset.demo, 'View Demo');
-  addLink(card.dataset.video, 'Watch Video');
-  addLink(card.dataset.download, 'Download');
-  addLink(card.dataset.source, 'Source Code');
-  
-  // Add dynamically parsed links from JSON
-  const parsedLinks = JSON.parse(card.dataset.linksObj || '{}');
-  Object.keys(parsedLinks).forEach(key => {
-    if (typeof parsedLinks[key] === 'string') {
-      addLink(parsedLinks[key], key.charAt(0).toUpperCase() + key.slice(1));
-    }
-  });
-  
-  modal.setAttribute('aria-hidden','false');
 }
-
-function closeModal(){
-  modal.setAttribute('aria-hidden','true');
-}
-
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
 
 function nav(dir){
-  activeIndex = (activeIndex + dir + cards.length) % cards.length;
-  const next = cards[activeIndex];
-  openCard(next);
+  const nextIdx = (activeIndex + dir + cards.length) % cards.length;
+  const next = cards[nextIdx];
+  activeIndex = nextIdx;
+  next.focus();
 }
-
-prevBtn.addEventListener('click', ()=>nav(-1));
-nextBtn.addEventListener('click', ()=>nav(1));
-
-// Image Navigation overrides
-imgPrev.addEventListener('click', (e)=> {
-  e.stopPropagation();
-  activeImageIndex = (activeImageIndex - 1 + activeImages.length) % activeImages.length;
-  updateModalImage();
-});
-
-imgNext.addEventListener('click', (e)=> {
-  e.stopPropagation();
-  activeImageIndex = (activeImageIndex + 1) % activeImages.length;
-  updateModalImage();
-});
 
 // Initialize data injection
 initPortfolio();

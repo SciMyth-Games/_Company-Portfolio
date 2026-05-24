@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Orbital Portfolio — Showcase Only</title>
+  <title>Orbital Portfolio — All Projects</title>
   <link rel="stylesheet" href="index.css">
 </head>
-<body>
-  <div class="ui">
+<body data-page="all">
+  <div class="ui" style="display:flex; flex-direction:column; gap:5px;">
+    <div>
+        <a href="index.html" style="color:var(--accent); text-decoration:none; font-size:14px; background:var(--glass); padding:4px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.05); margin-bottom: 5px; display:inline-block;">← Back to Games Showcase</a>
+    </div>
     <div class="filters" role="toolbar" aria-label="Filters">
       <button class="filter active" data-tag="all">All</button>
+      <button class="filter" data-tag="web">Web</button>
       <button class="filter" data-tag="unreal">Unreal</button>
       <button class="filter" data-tag="unity">Unity</button>
+      <button class="filter" data-tag="other">Other</button>
     </div>
   </div>
 
   <main class="stage" id="stage" tabindex="0">
-    <div class="orb">SHOWCASE</div>
+    <div class="orb">ALL PROJECTS</div>
 
     <div class="orbit" id="orbit" data-rotation="0">
       <!-- Cards will be injected here via app.js -->
@@ -27,3 +32,4 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+
