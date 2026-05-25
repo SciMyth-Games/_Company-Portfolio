@@ -1,107 +1,16 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project</title>
-  <link rel="stylesheet" href="../../index.css">
-  <style>
-    body { padding: 20px; background: radial-gradient(1200px 800px at 10% 10%, #071028 0%, #0f1724 40%); }
-    .container { max-width: 900px; margin: 0 auto; background: rgba(11, 18, 32, 0.5); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; }
-    .back-btn { display: inline-block; margin-bottom: 20px; color: #6ee7b7; text-decoration: none; }
-    .back-btn:hover { text-decoration: underline; }
-    h1 { color: #e9fbf4; margin: 0 0 10px 0; }
-    .meta { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; color: #98a8bf; font-size: 14px; }
-    .meta span { display: flex; align-items: center; gap: 5px; }
-    .description { color: #c9d7e8; line-height: 1.6; margin: 20px 0; }
-    .section { margin: 30px 0; }
-    .section-title { color: #e9fbf4; font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid rgba(110,231,183,0.3); padding-bottom: 10px; }
-    .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
-    .badge { background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.3); color: #6ee7b7; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
-    .features { list-style: none; padding: 0; }
-    .features li { padding: 8px 0; color: #c9d7e8; }
-    .features li:before { content: "✓ "; color: #6ee7b7; margin-right: 8px; font-weight: bold; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-    .btn { padding: 10px 20px; background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.3); color: #6ee7b7; text-decoration: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
-    .btn:hover { background: rgba(110,231,183,0.2); }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 20px 0; }
-    .gallery img { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(110,231,183,0.2); cursor: pointer; }
-    .gallery img:hover { border-color: #6ee7b7; }
-    @media (max-width: 600px) { .container { padding: 20px; } h1 { font-size: 24px; } .meta { flex-direction: column; gap: 10px; } }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bubble Trap</title>
+  <meta http-equiv="refresh" content="0; url=../_template/index.html?id=bubble-trap" />
+  <script>
+    location.replace('../_template/index.html?id=bubble-trap');
+  </script>
 </head>
 <body>
-  <div class="container">
-    <a href="../../index.html" class="back-btn">← Back to Showcase</a>
-    
-    <div id="content">
-      <p style="text-align: center; color: #98a8bf;">Loading project...</p>
-    </div>
-  </div>
-
-  <script>
-    async function loadProject() {
-      try {
-        const projectId = window.location.pathname.split('/').filter(p => p).slice(-2)[0];
-        
-        const res = await fetch('../../data/projects.json');
-        if (!res.ok) throw new Error('Failed to load projects');
-        
-        const data = await res.json();
-        const project = data.projects.find(p => p.id === projectId);
-        
-        if (!project) throw new Error('Project not found');
-        
-        renderProject(project);
-      } catch (err) {
-        document.getElementById('content').innerHTML = `<p style="color: #ff6b6b;">Error: ${err.message}</p>`;
-        console.error(err);
-      }
-    }
-
-    function renderProject(p) {
-      const html = `
-        <h1>${p.title}</h1>
-        <div class="meta">
-          <span>🎮 ${p.engine}</span>
-          <span>📁 ${p.type}</span>
-          ${p.tags ? `<span>🏷️ ${p.tags.join(', ')}</span>` : ''}
-        </div>
-        
-        <div class="description">
-          ${p.description}
-        </div>
-        
-        ${p.images && p.images.length > 0 ? `
-          <div class="section">
-            <div class="section-title">Gallery</div>
-            <div class="gallery">
-              ${p.images.map(img => `<img src="../../${img}" alt="Project image" loading="lazy">`).join('')}
-            </div>
-          </div>
-        ` : ''}
-        
-        ${p.techStack && p.techStack.length > 0 ? `
-          <div class="section">
-            <div class="section-title">Tech Stack</div>
-            <div class="tech-stack">
-              ${p.techStack.map(tech => `<span class="badge">${tech}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-        
-        <div class="actions">
-          ${p.links && p.links.demo ? `<a href="${p.links.demo}" target="_blank" class="btn">🎮 View Demo</a>` : ''}
-          ${p.links && p.links.source ? `<a href="${p.links.source}" target="_blank" class="btn">💻 Source Code</a>` : ''}
-        </div>
-      `;
-      
-      document.getElementById('content').innerHTML = html;
-      document.title = p.title + ' - Portfolio';
-    }
-
-    loadProject();
-  </script>
+  <p>Redirecting to project details...</p>
+  <p><a href="../_template/index.html?id=bubble-trap">Open project</a></p>
 </body>
 </html>
-

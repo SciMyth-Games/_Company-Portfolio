@@ -1,9 +1,47 @@
 /* index.css.txt */
 :root{
   --bg:#0f1724; --card:#0b1220; --glass:rgba(255,255,255,0.06);
-  --accent:#6ee7b7; --muted:#98a8bf; --orbit-size:min(50vmin,500px);
+  --accent:#6ee7b7; --muted:#98a8bf; --orbit-size:min(60vmin,560px);
 }
 *{box-sizing:border-box}
+
+/* Custom cursor */
+body.use-custom-cursor{cursor:none}
+body.use-custom-cursor *{cursor:none}
+.custom-cursor{
+  position:fixed;
+  left:0;
+  top:0;
+  width:28px;
+  height:28px;
+  border:1.5px solid rgba(110,231,183,0.75);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:9999;
+  transition:transform 0.12s ease, opacity 0.12s ease, border-color 0.12s ease;
+}
+.custom-cursor-dot{
+  position:fixed;
+  left:0;
+  top:0;
+  width:6px;
+  height:6px;
+  background:rgba(110,231,183,0.95);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:10000;
+}
+.custom-cursor.is-active{transform:translate(-50%,-50%) scale(1.3)}
+.custom-cursor.is-hidden,.custom-cursor-dot.is-hidden{opacity:0}
+
+@media (hover: none){
+  body.use-custom-cursor{cursor:auto}
+  body.use-custom-cursor *{cursor:auto}
+  .custom-cursor,.custom-cursor-dot{display:none}
+}
+
 html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef8;background:radial-gradient(1200px 800px at 10% 10%,#071028 0%,var(--bg) 40%);-webkit-font-smoothing:antialiased}
 .ui{position:fixed;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;z-index:40;background:rgba(15,23,36,0.8);backdrop-filter:blur(10px);padding:8px;border-radius:30px;border:1px solid rgba(255,255,255,0.05)}
 #themeToggle{background:var(--glass);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
@@ -38,12 +76,12 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe U
 
 /* Responsive */
 @media (max-width:1024px){
-  :root{--orbit-size:min(45vmin,450px)}
+  :root{--orbit-size:min(52vmin,500px)}
   .card{width:140px;height:80px;margin:-40px 0 0 -70px;font-size:13px}
 }
 
 @media (max-width:768px){
-  :root{--orbit-size:min(55vmin,380px)}
+  :root{--orbit-size:min(62vmin,420px)}
   .card{width:130px;height:75px;margin:-37px 0 0 -65px}
   .card h3{font-size:12px}
   .card p{font-size:10px}
@@ -51,7 +89,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe U
 }
 
 @media (max-width:480px){
-  :root{--orbit-size:min(70vmin,350px)}
+  :root{--orbit-size:min(74vmin,380px)}
   .card{width:110px;height:65px;margin:-32px 0 0 -55px;padding:10px 12px}
   .card h3{font-size:11px}
   .card p{font-size:9px}

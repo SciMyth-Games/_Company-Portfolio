@@ -1,17 +1,269 @@
 {
   "projects": [
-    {"id": "realm-rival", "title": "Realm Rival", "description": "Competitive multiplayer action game", "engine": "Unreal Engine 5", "type": "game", "tags": ["unreal", "multiplayer", "action"], "techStack": ["Unreal Engine 5", "C++", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "word-dash", "title": "Word Dash", "description": "Multiplayer word-puzzle game", "engine": "Unreal Engine 5.5", "type": "game", "tags": ["unreal", "puzzle", "multiplayer"], "techStack": ["Unreal Engine 5.5", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "rewind", "title": "Rewind System", "description": "Advanced time-manipulation mechanic", "engine": "Unreal Engine 5.4", "type": "game", "tags": ["unreal", "experimental"], "techStack": ["Unreal Engine 5.4", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "prototype-for-rpg-game", "title": "Prototype For RPG Game", "description": "Modular RPG framework", "engine": "Unreal Engine 5", "type": "game", "tags": ["unreal", "rpg"], "techStack": ["Unreal Engine 5", "C++"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "reality-run", "title": "Reality Run", "description": "Sci-fi action-combat prototype", "engine": "Unreal Engine 5", "type": "game", "tags": ["unreal", "action"], "techStack": ["Unreal Engine 5", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "lost-cure", "title": "The Lost Cure", "description": "Narrative-driven action adventure", "engine": "Unreal Engine 5.4", "type": "game", "tags": ["unreal", "action", "adventure"], "techStack": ["Unreal Engine 5.4", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "bubble-trap", "title": "Bubble Trap", "description": "2D action-platformer with bubble mechanic", "engine": "Unity 6", "type": "game", "tags": ["unity", "platformer", "action"], "techStack": ["Unity 6", "C#"], "images": ["assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033347.png", "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033449.png"], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "paint-runner", "title": "It's Me Pico", "description": "Territory-control mobile game", "engine": "Unity 2023.x", "type": "game", "tags": ["unity", "mobile", "game"], "techStack": ["Unity 2023.x", "C#"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "slimey-jump", "title": "Slimey Jump", "description": "2D vertical endless platformer", "engine": "Unity 6", "type": "game", "tags": ["unity", "platformer", "endless"], "techStack": ["Unity 6", "C#"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "surprise-sprint", "title": "Surprise Sprint", "description": "Endless runner with procedural generation", "engine": "Unity 6", "type": "game", "tags": ["unity", "runner", "endless"], "techStack": ["Unity 6", "C#"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "word-game", "title": "Word Game", "description": "Location-themed word puzzle", "engine": "Unity", "type": "game", "tags": ["unity", "puzzle", "game"], "techStack": ["Unity", "C#"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "indra-vs-virtasure", "title": "Indra vs Vritra", "description": "Full-featured action RPG", "engine": "Unreal Engine 5", "type": "game", "tags": ["unreal", "rpg", "action"], "techStack": ["Unreal Engine 5", "C++"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}},
-    {"id": "quest-of-cybertron", "title": "Quest of Cybertron", "description": "Sci-fi adventure game", "engine": "Unreal Engine 5", "type": "game", "tags": ["unreal", "adventure"], "techStack": ["Unreal Engine 5", "Blueprints"], "images": [], "links": {"demo": "https://rez26.github.io/_Portfolio/", "source": ""}}
+    {
+      "id": "realm-rival",
+      "title": "Realm Rival",
+      "description": "Competitive multiplayer action game",
+      "engine": "Unreal Engine 5",
+      "type": "game",
+      "tags": ["unreal", "multiplayer", "action"],
+      "techStack": ["Unreal Engine 5", "C++", "Blueprints"],
+      "image": "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165615.png",
+      "images": [
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165615.png",
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165636.png",
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165649.png",
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165827.png",
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165843.png",
+        "assets/Screenshots/Realm Rivals/Screenshot 2026-04-05 165913.png"
+      ],
+      "video": "https://youtu.be/PvAs_mlONsE",
+      "download": "https://drive.google.com/file/d/1KTuYCWKGz8Z8lP54AXXSWTS9zpkenebb/view?usp=sharing",
+      "links": {"demo": "projects/realm-rival/index.html", "source": ""}
+    },
+    {
+      "id": "word-dash",
+      "title": "Word Dash",
+      "description": "Multiplayer word-puzzle game",
+      "engine": "Unreal Engine 5.5",
+      "type": "game",
+      "tags": ["unreal", "puzzle", "multiplayer"],
+      "techStack": ["Unreal Engine 5.5", "Blueprints"],
+      "image": "assets/Screenshots/Word Dash/Screenshot 2026-04-05 215451.png",
+      "images": [
+        "assets/Screenshots/Word Dash/Screenshot 2026-04-05 215451.png",
+        "assets/Screenshots/Word Dash/Screenshot 2026-04-05 215504.png",
+        "assets/Screenshots/Word Dash/Screenshot 2026-04-05 215513.png",
+        "assets/Screenshots/Word Dash/Screenshot 2026-04-05 215601.png"
+      ],
+      "video": "https://youtu.be/fep_nQACTks",
+      "download": "https://drive.google.com/file/d/1NtKFE3bWKfmUJqSPo0bPUXLseTDry5Ni/view?usp=sharing",
+      "links": {"demo": "projects/word-dash/index.html", "source": ""}
+    },
+    {
+      "id": "rewind",
+      "title": "Rewind System",
+      "description": "Advanced time-manipulation mechanic",
+      "engine": "Unreal Engine 5.4",
+      "type": "game",
+      "tags": ["unreal", "experimental"],
+      "techStack": ["Unreal Engine 5.4", "Blueprints"],
+      "image": "assets/Screenshots/Rewind System/Screenshot 2026-04-06 102954.png",
+      "images": [
+        "assets/Screenshots/Rewind System/Screenshot 2026-04-06 102954.png",
+        "assets/Screenshots/Rewind System/Screenshot 2026-04-06 103010.png",
+        "assets/Screenshots/Rewind System/Screenshot 2026-04-06 103100.png"
+      ],
+      "video": "https://youtu.be/pVjgrQKkfMY",
+      "download": "https://drive.google.com/file/d/1_xjGCZ4UUGmQ4PpV76XJpO56VwVE2p9s/view?usp=sharing",
+      "links": {"demo": "projects/rewind/index.html", "source": ""}
+    },
+    {
+      "id": "prototype-for-rpg-game",
+      "title": "Prototype For RPG Game",
+      "description": "Modular RPG framework",
+      "engine": "Unreal Engine 5",
+      "type": "game",
+      "tags": ["unreal", "rpg"],
+      "techStack": ["Unreal Engine 5", "C++"],
+      "image": "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104430.png",
+      "images": [
+        "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104430.png",
+        "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104436.png",
+        "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104452.png",
+        "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104518.png",
+        "assets/Screenshots/Prototype For RPG Game/Screenshot 2026-04-06 104524.png"
+      ],
+      "video": "https://youtu.be/_Pzsp0p9Uyc",
+      "links": {"demo": "projects/prototype-for-rpg-game/index.html", "source": ""}
+    },
+    {
+      "id": "reality-run",
+      "title": "Reality Run",
+      "description": "Sci-fi action-combat prototype",
+      "engine": "Unreal Engine 5",
+      "type": "game",
+      "tags": ["unreal", "action"],
+      "techStack": ["Unreal Engine 5", "Blueprints"],
+      "image": "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.22.52.34.png",
+      "images": [
+        "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.22.52.34.png",
+        "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.23.32.52.png",
+        "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.24.52.95.png",
+        "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.25.17.41.png",
+        "assets/Screenshots/RealityRun/Engine Screenshot 2026.03.13 - 20.25.24.53.png"
+      ],
+      "video": "https://youtu.be/uYjTa0nZxZw",
+      "download": "https://drive.google.com/file/d/18cGeN27hQ_SrZ_nFJm-KtLnjEqb0PDZ2/view?usp=sharing",
+      "links": {"demo": "projects/reality-run/index.html", "source": ""}
+    },
+    {
+      "id": "lost-cure",
+      "title": "The Lost Cure",
+      "description": "Narrative-driven action adventure",
+      "engine": "Unreal Engine 5.4",
+      "type": "game",
+      "tags": ["unreal", "action", "adventure"],
+      "techStack": ["Unreal Engine 5.4", "Blueprints"],
+      "image": "assets/Screenshots/The Lost Cure/Lost_Cure1.jpg",
+      "images": [
+        "assets/Screenshots/The Lost Cure/Lost_Cure1.jpg",
+        "assets/Screenshots/The Lost Cure/Lost_Cure2.jpg",
+        "assets/Screenshots/The Lost Cure/Lost_Cure3.jpg",
+        "assets/Screenshots/The Lost Cure/Lost_Cure4.jpg"
+      ],
+      "video": "https://youtu.be/pio_Z0jXJao",
+      "download": "https://drive.google.com/file/d/1XuO6Yjj8IeXFzfi7K7IWf9BLmHmuNFM4/view?usp=sharing",
+      "links": {"demo": "projects/lost-cure/index.html", "source": ""}
+    },
+    {
+      "id": "bubble-trap",
+      "title": "Bubble Trap",
+      "description": "2D action-platformer with bubble mechanic",
+      "engine": "Unity 6",
+      "type": "game",
+      "tags": ["unity", "platformer", "action"],
+      "techStack": ["Unity 6", "C#"],
+      "image": "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033347.png",
+      "images": [
+        "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033347.png",
+        "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033449.png",
+        "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033509.png",
+        "assets/Screenshots/Bubble Trap/Screenshot 2025-01-25 033524.png"
+      ],
+      "video": "https://youtu.be/5f7nAO5YYms",
+      "download": "https://drive.google.com/file/d/1cNzXhPa7kWTm0vW5IG1_v5xBtCUH_5g4/view?usp=sharing",
+      "links": {"demo": "projects/bubble-trap/index.html", "source": ""}
+    },
+    {
+      "id": "paint-runner",
+      "title": "It's Me Pico",
+      "description": "Territory-control mobile game",
+      "engine": "Unity 2023.x",
+      "type": "game",
+      "tags": ["unity", "mobile", "game"],
+      "techStack": ["Unity 2023.x", "C#"],
+      "image": "assets/Screenshots/Paint Runner/Screenshot_20260405_161250_It's Me Pico.jpg.jpeg",
+      "images": [
+        "assets/Screenshots/Paint Runner/Screenshot_20260405_161250_It's Me Pico.jpg.jpeg",
+        "assets/Screenshots/Paint Runner/Screenshot_20260405_161309_It's Me Pico.jpg.jpeg",
+        "assets/Screenshots/Paint Runner/Screenshot_20260405_161345_It's Me Pico.jpg.jpeg",
+        "assets/Screenshots/Paint Runner/Screenshot_20260405_161436_It's Me Pico.jpg.jpeg"
+      ],
+      "download": "https://drive.google.com/file/d/1vaSEFGQjiQs7WRwmIqKBS-HS8jrjfDl1/view?usp=sharing",
+      "links": {"demo": "projects/paint-runner/index.html", "source": ""}
+    },
+    {
+      "id": "slimey-jump",
+      "title": "Slimey Jump",
+      "description": "2D vertical endless platformer",
+      "engine": "Unity 6",
+      "type": "game",
+      "tags": ["unity", "platformer", "endless"],
+      "techStack": ["Unity 6", "C#"],
+      "image": "assets/Screenshots/Slimey Jump/Screenshot 2026-04-06 211023.png",
+      "images": [
+        "assets/Screenshots/Slimey Jump/Screenshot 2026-04-06 211023.png",
+        "assets/Screenshots/Slimey Jump/Screenshot 2026-04-06 211038.png",
+        "assets/Screenshots/Slimey Jump/Screenshot 2026-04-06 211051.png",
+        "assets/Screenshots/Slimey Jump/Screenshot 2026-04-06 211118.png"
+      ],
+      "video": "https://youtu.be/z44rl-hI6EQ",
+      "download": "https://play.google.com/store/apps/details?id=com.PlaygroundTest.SlimeyJump",
+      "links": {"demo": "projects/slimey-jump/index.html", "source": ""},
+      "shipped": true
+    },
+    {
+      "id": "surprise-sprint",
+      "title": "Surprise Sprint",
+      "description": "Endless runner with procedural generation",
+      "engine": "Unity 6",
+      "type": "game",
+      "tags": ["unity", "runner", "endless"],
+      "techStack": ["Unity 6", "C#"],
+      "image": "assets/Screenshots/Surprise Sprint/Screenshot 2025-01-22 204535.png",
+      "images": [
+        "assets/Screenshots/Surprise Sprint/Screenshot 2025-01-22 204535.png",
+        "assets/Screenshots/Surprise Sprint/Screenshot 2025-01-22 204651.png",
+        "assets/Screenshots/Surprise Sprint/Screenshot 2025-01-22 204818.png",
+        "assets/Screenshots/Surprise Sprint/Screenshot 2025-01-22 204825.png"
+      ],
+      "video": "https://youtu.be/xCb01Blb40U",
+      "download": "https://shubham-bajaj.itch.io/surprise-sprint",
+      "links": {"demo": "projects/surprise-sprint/index.html", "source": ""}
+    },
+    {
+      "id": "word-game",
+      "title": "Word Game",
+      "description": "Location-themed word puzzle",
+      "engine": "Unity",
+      "type": "game",
+      "tags": ["unity", "puzzle", "game"],
+      "techStack": ["Unity", "C#"],
+      "image": "assets/Screenshots/Word Game/1.jpeg",
+      "images": [
+        "assets/Screenshots/Word Game/1.jpeg",
+        "assets/Screenshots/Word Game/2.jpeg",
+        "assets/Screenshots/Word Game/3.jpeg",
+        "assets/Screenshots/Word Game/4.jpeg",
+        "assets/Screenshots/Word Game/5.jpeg",
+        "assets/Screenshots/Word Game/6.jpeg",
+        "assets/Screenshots/Word Game/7.jpeg",
+        "assets/Screenshots/Word Game/8.jpeg",
+        "assets/Screenshots/Word Game/9.jpeg",
+        "assets/Screenshots/Word Game/10.jpeg",
+        "assets/Screenshots/Word Game/11.jpeg"
+      ],
+      "video": "https://youtu.be/akC-4MpqR1Q",
+      "links": {"demo": "projects/word-game/index.html", "source": ""}
+    },
+    {
+      "id": "indra-vs-virtasure",
+      "title": "Indra vs Vritra",
+      "description": "Full-featured action RPG",
+      "engine": "Unreal Engine 5",
+      "type": "game",
+      "tags": ["unreal", "rpg", "action"],
+      "techStack": ["Unreal Engine 5", "C++"],
+      "image": "assets/Screenshots/Legend of Indra vs Vritrasur/Indra1.png",
+      "images": [
+        "assets/Screenshots/Legend of Indra vs Vritrasur/Indra1.png",
+        "assets/Screenshots/Legend of Indra vs Vritrasur/Indra2.png",
+        "assets/Screenshots/Legend of Indra vs Vritrasur/Indra3.png",
+        "assets/Screenshots/Legend of Indra vs Vritrasur/Indra4.png",
+        "assets/Screenshots/Legend of Indra vs Vritrasur/Indra5.png",
+        "assets/Screenshots/Indra vs Vritra/Indra vs Vritra1.jpg",
+        "assets/Screenshots/Indra vs Vritra/Indra vs Vritra2.jpg",
+        "assets/Screenshots/Indra vs Vritra/Indra vs Vritra3.jpg"
+      ],
+      "video": "https://youtu.be/tHJqDJAKLmA",
+      "download": "https://drive.google.com/file/d/1KTuYCWKGz8Z8lP54AXXSWTS9zpkenebb/view?usp=sharing",
+      "links": {"demo": "projects/indra-vs-virtasure/index.html", "source": ""}
+    },
+    {
+      "id": "quest-of-cybertron",
+      "title": "Quest of Cybertron",
+      "description": "Sci-fi adventure game",
+      "engine": "Unreal Engine 5",
+      "type": "game",
+      "tags": ["unreal", "adventure"],
+      "techStack": ["Unreal Engine 5", "Blueprints"],
+      "image": "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191107.png",
+      "images": [
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191107.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191118.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191129.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191235.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191255.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191309.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191405.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191444.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191455.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191507.png",
+        "assets/Screenshots/Isles Of Echoes On Cybertrom/Screenshot 2026-04-05 191529.png"
+      ],
+      "download": "https://drive.google.com/drive/folders/1U-bXF7hFeeuFArOaMZmsjs0-0R1298MB?usp=sharing",
+      "links": {"demo": "projects/quest-of-cybertron/index.html", "source": ""}
+    }
   ]
 }
