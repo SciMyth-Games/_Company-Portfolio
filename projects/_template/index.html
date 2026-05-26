@@ -484,7 +484,7 @@
           <div class="error">
             <h2>Error Loading Project</h2>
             <p>${err.message}</p>
-            <a href="../../index.html" class="nav-btn">? Back to Showcase</a>
+            <a href="../../index.html" class="nav-btn">Back to Showcase</a>
           </div>
         `;
       }
@@ -563,12 +563,19 @@
       const techStack = projectData.techStack || [];
       const keyFeatures = projectData.keyFeatures || [];
       const techBreakdown = projectData.technicalBreakdown || {};
+      const formatLabel = (value) => {
+        if (!value) return '';
+        return String(value)
+          .replace(/([a-z])([A-Z])/g, '$1 $2')
+          .replace(/[_-]+/g, ' ')
+          .trim();
+      };
 
       let html = `
         <div class="nav-buttons">
-          <a href="../../index.html" class="nav-btn">? Back to Showcase</a>
-          <button class="nav-btn" onclick="navigatePrevious()">? Previous Project</button>
-          <button class="nav-btn" onclick="navigateNext()">Next Project ?</button>
+          <a href="../../index.html" class="nav-btn">Back to Showcase</a>
+          <button class="nav-btn" onclick="navigatePrevious()">Previous Project</button>
+          <button class="nav-btn" onclick="navigateNext()">Next Project</button>
         </div>
 
         <h1>${projectData.title}</h1>
@@ -610,8 +617,8 @@
             <div class="main-image-wrapper">
               <img id="mainImage" class="main-image" src="../../${images[0]}" alt="${projectData.title}">
               ${images.length > 1 ? `
-                <button class="image-nav-btn prev" onclick="previousImage()">?</button>
-                <button class="image-nav-btn next" onclick="nextImage()">?</button>
+                <button class="image-nav-btn prev" onclick="previousImage()">&lt;</button>
+                <button class="image-nav-btn next" onclick="nextImage()">&gt;</button>
                 <div class="image-counter"><span id="imageCounter">1</span> / ${images.length}</div>
               ` : ''}
             </div>
@@ -642,7 +649,7 @@
             <div class="features-grid">
               ${keyFeatures.map(feature => `
                 <div class="feature-card">
-                  <strong>?</strong>
+                  <strong>*</strong>
                   ${feature}
                 </div>
               `).join('')}
@@ -671,7 +678,7 @@
             <div class="tech-breakdown">
               ${Object.entries(techBreakdown).map(([key, value]) => `
                 <div class="tech-item">
-                  <strong>${key.charAt(0).toUpperCase() + key.slice(1)}</strong>
+                  <strong>${formatLabel(key)}</strong>
                   <p>${value}</p>
                 </div>
               `).join('')}
@@ -687,11 +694,11 @@
       if (Object.keys(links).length > 0 || projectData.download) {
         html += `
           <div class="action-buttons">
-            ${projectData.download ? `<a href="${projectData.download}" target="_blank" class="action-btn">?? Download</a>` : ''}
-            ${links.source ? `<a href="${links.source}" target="_blank" class="action-btn">?? Source Code</a>` : ''}
+            ${projectData.download ? `<a href="${projectData.download}" target="_blank" class="action-btn">Download</a>` : ''}
+            ${links.source ? `<a href="${links.source}" target="_blank" class="action-btn">Source Code</a>` : ''}
             ${Object.entries(links)
               .filter(([key]) => !['demo', 'source'].includes(key.toLowerCase()))
-              .map(([key, url]) => `<a href="${url}" target="_blank" class="action-btn">${key} ?</a>`)
+              .map(([key, url]) => `<a href="${url}" target="_blank" class="action-btn">${formatLabel(key)}</a>`)
               .join('')}
           </div>
         `;
