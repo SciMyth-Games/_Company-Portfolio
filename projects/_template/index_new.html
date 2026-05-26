@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,7 +20,7 @@
     .badge { background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.3); color: #6ee7b7; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
     .features { list-style: none; padding: 0; }
     .features li { padding: 8px 0; color: #c9d7e8; }
-    .features li:before { content: "✓ "; color: #6ee7b7; margin-right: 8px; font-weight: bold; }
+    .features li:before { content: "? "; color: #6ee7b7; margin-right: 8px; font-weight: bold; }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
     .btn { padding: 10px 20px; background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.3); color: #6ee7b7; text-decoration: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
     .btn:hover { background: rgba(110,231,183,0.2); }
@@ -32,7 +32,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="../../index.html" class="back-btn">← Back to Showcase</a>
+    <a href="../../index.html" class="back-btn">? Back to Showcase</a>
     
     <div id="content">
       <p style="text-align: center; color: #98a8bf;">Loading project...</p>
@@ -63,9 +63,9 @@
       const html = `
         <h1>${p.title}</h1>
         <div class="meta">
-          <span>🎮 ${p.engine}</span>
-          <span>📁 ${p.type}</span>
-          ${p.tags ? `<span>🏷️ ${p.tags.join(', ')}</span>` : ''}
+          <span>?? ${p.engine}</span>
+          <span>?? ${p.type}</span>
+          ${p.tags ? `<span>??? ${p.tags.join(', ')}</span>` : ''}
         </div>
         
         <div class="description">
@@ -91,8 +91,8 @@
         ` : ''}
         
         <div class="actions">
-          ${p.links && p.links.demo ? `<a href="${p.links.demo}" target="_blank" class="btn">🎮 View Demo</a>` : ''}
-          ${p.links && p.links.source ? `<a href="${p.links.source}" target="_blank" class="btn">💻 Source Code</a>` : ''}
+          ${p.links && p.links.demo ? `<a href="${p.links.demo}" target="_blank" class="btn">?? View Demo</a>` : ''}
+          ${p.links && p.links.source ? `<a href="${p.links.source}" target="_blank" class="btn">?? Source Code</a>` : ''}
         </div>
       `;
       

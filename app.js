@@ -1,4 +1,4 @@
-﻿const orbit = document.getElementById('orbit');
+const orbit = document.getElementById('orbit');
 let cards = [];
 let allProjects = [];
 const filters = document.querySelectorAll('.filter');
@@ -94,9 +94,9 @@ async function initPortfolio() {
 
     placeCards(cards);
     setupCardTilt();
-    console.log(`✓ Portfolio loaded with ${cards.length} projects`);
+    console.log(`? Portfolio loaded with ${cards.length} projects`);
   } catch (err) {
-    console.error('❌ Failed to load portfolio data:', err);
+    console.error('? Failed to load portfolio data:', err);
     // Show error message on page
     const orbit = document.getElementById('orbit');
     if (orbit) {
