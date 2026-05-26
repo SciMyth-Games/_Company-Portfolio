@@ -9,26 +9,29 @@ let tilt = 0;
 let activeIndex = 0;
 let tiltRaf = null;
 
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`Failed to load ${url}: ${res.status}`);
+  }
+  const text = await res.text();
+  const clean = text.replace(/^\uFEFF/, '');
+  return JSON.parse(clean);
+}
+
 // Fetch projects and generate cards
 async function initPortfolio() {
   try {
     // Fetch projects.json
-    const projectsRes = await fetch('data/projects.json');
-    if (!projectsRes.ok) {
-      throw new Error(`Failed to load projects.json: ${projectsRes.status}`);
-    }
-    const projectsData = await projectsRes.json();
+    const projectsData = await fetchJson('data/projects.json');
     
     allProjects = projectsData.projects;
     let projectDetailsMap = {};
     
     // Try to fetch project-details.json (optional)
     try {
-      const detailsRes = await fetch('data/project-details.json');
-      if (detailsRes.ok) {
-        const detailsData = await detailsRes.json();
-        projectDetailsMap = detailsData.projectDetails || {};
-      }
+      const detailsData = await fetchJson('data/project-details.json');
+      projectDetailsMap = detailsData.projectDetails || {};
     } catch (e) {
       console.warn('Could not load project-details.json:', e);
     }
