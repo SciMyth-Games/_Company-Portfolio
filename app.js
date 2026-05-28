@@ -1,7 +1,6 @@
 const orbit = document.getElementById('orbit');
 let cards = [];
 let allProjects = [];
-const filters = document.querySelectorAll('.filter');
 const stage = document.getElementById('stage');
 
 let rotation = 0;
@@ -92,8 +91,15 @@ async function initPortfolio() {
       c.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openCard(c) });
     });
 
+    // Delegate clicks to ensure card text clicks always open
+    orbit.addEventListener('click', (e)=>{
+      const targetCard = e.target && e.target.closest ? e.target.closest('.card') : null;
+      if (targetCard) openCard(targetCard);
+    });
+
     placeCards(cards);
     setupCardTilt();
+    scheduleCardPlacement();
     console.log(`? Portfolio loaded with ${cards.length} projects`);
   } catch (err) {
     console.error('? Failed to load portfolio data:', err);
@@ -107,14 +113,41 @@ async function initPortfolio() {
 
 function placeCards(targetCards){
   const n = targetCards.length;
-  // Spread out the elements in a perfect ring
+  // Spread out the elements in an ellipse using orbit width/height
+  const orbitEl = document.querySelector('.orbit');
+  if (!orbitEl) return;
+  const rect = orbitEl.getBoundingClientRect();
+  let orbitWidth = rect.width;
+  let orbitHeight = rect.height;
+
+  if (!orbitWidth || !orbitHeight) {
+    const styles = getComputedStyle(orbitEl);
+    orbitWidth = parseFloat(styles.width) || orbitWidth;
+    orbitHeight = parseFloat(styles.height) || orbitHeight;
+  }
+
+  if (!orbitWidth || !orbitHeight) return;
+
+  const radiusX = orbitWidth / 2.2;
+  const radiusY = orbitHeight / 2.2;
+  const startAngle = -Math.PI / 2;
+
   targetCards.forEach((c,i)=>{
-    const angle = (i / n) * 360;
+    const angle = startAngle + (i / n) * Math.PI * 2;
     c.dataset.index = i;
-    const baseTransform = `rotate(${angle}deg) translateY(calc(var(--orbit-size) / -2.2)) rotate(-${angle}deg)`;
+    const x = Math.cos(angle) * radiusX;
+    const y = Math.sin(angle) * radiusY;
+    const baseTransform = `translate(${x}px, ${y}px)`;
     c.dataset.baseTransform = baseTransform;
-    c.style.transform = baseTransform;
+    c.style.setProperty('--base-transform', baseTransform);
+    c.style.setProperty('--tilt-transform', 'translateZ(0)');
   });
+}
+
+function scheduleCardPlacement(){
+  if (!cards.length) return;
+  requestAnimationFrame(()=> placeCards(cards));
+  setTimeout(()=> placeCards(cards), 120);
 }
 
 function updateOrbit(){
@@ -148,11 +181,21 @@ function setupCursor(){
   document.addEventListener('mousemove', (e)=>{
     x = e.clientX;
     y = e.clientY;
+    const hoverTarget = e.target && e.target.closest ? e.target.closest('.card') : null;
+    if (hoverTarget) {
+      cursor.classList.add('is-hover');
+      dot.classList.add('is-hover');
+    } else {
+      cursor.classList.remove('is-hover');
+      dot.classList.remove('is-hover');
+    }
   });
 
   document.addEventListener('mouseleave', ()=>{
     cursor.classList.add('is-hidden');
     dot.classList.add('is-hidden');
+    cursor.classList.remove('is-hover');
+    dot.classList.remove('is-hover');
   });
 
   document.addEventListener('mouseenter', ()=>{
@@ -195,11 +238,12 @@ function setupCardTilt(){
       const ry = (e.clientX - rect.left) / rect.width - 0.5;
       const tiltX = (-rx * 8).toFixed(2);
       const tiltY = (ry * 8).toFixed(2);
-      card.style.transform = `${baseTransform} rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      card.style.setProperty('--base-transform', baseTransform);
+      card.style.setProperty('--tilt-transform', `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`);
     });
 
     card.addEventListener('mouseleave', ()=>{
-      card.style.transform = baseTransform;
+      card.style.setProperty('--tilt-transform', 'translateZ(0)');
     });
   });
 }
@@ -240,30 +284,5 @@ function nav(dir){
 initPortfolio();
 setupCursor();
 setupStageTilt();
-
-// filters
-filters.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    // update active button
-    filters.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const tag = btn.dataset.tag;
-    const visibleCards = [];
-
-    // show/hide cards safely
-    cards.forEach(c=>{
-      const tags = (c.dataset.tags || '').split(/\s+/).filter(Boolean);
-      if(tag === 'all' || tags.indexOf(tag) !== -1) {
-        c.style.display = '';
-        visibleCards.push(c);
-      } else {
-        c.style.display = 'none';
-      }
-    });
-
-    if(visibleCards.length > 0) {
-      placeCards(visibleCards);
-    }
-  });
-});
+window.addEventListener('resize', scheduleCardPlacement);
+window.addEventListener('load', scheduleCardPlacement);

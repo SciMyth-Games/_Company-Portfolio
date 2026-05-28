@@ -423,6 +423,8 @@
   <script>
     let currentImageIndex = 0;
     let projectData = null;
+    let projectOrder = [];
+    let currentProjectIndex = -1;
 
     function getYouTubeEmbedUrl(url) {
       if (!url) return null;
@@ -464,6 +466,9 @@
         if (!project) {
           throw new Error('Project not found');
         }
+
+        projectOrder = projectsData.projects;
+        currentProjectIndex = projectOrder.findIndex(p => p.id === projectId);
 
         const detailAliases = {
           "rewind": "rewind-system",
@@ -571,11 +576,14 @@
           .trim();
       };
 
+      const hasPrev = currentProjectIndex > 0;
+      const hasNext = currentProjectIndex > -1 && currentProjectIndex < projectOrder.length - 1;
+
       let html = `
         <div class="nav-buttons">
           <a href="../../index.html" class="nav-btn">Back to Showcase</a>
-          <button class="nav-btn" onclick="navigatePrevious()">Previous Project</button>
-          <button class="nav-btn" onclick="navigateNext()">Next Project</button>
+          ${hasPrev ? '<button class="nav-btn" onclick="navigatePrevious()">Previous Project</button>' : ''}
+          ${hasNext ? '<button class="nav-btn" onclick="navigateNext()">Next Project</button>' : ''}
         </div>
 
         <h1>${projectData.title}</h1>
@@ -758,7 +766,7 @@
           const projects = data.projects;
           const currentId = getCurrentProjectId();
           const currentIndex = projects.findIndex(p => p.id === currentId);
-          if (currentIndex < projects.length - 1) {
+          if (currentIndex > -1 && currentIndex < projects.length - 1) {
             window.location.href = `../../projects/${projects[currentIndex + 1].id}/index.html`;
           }
         });
